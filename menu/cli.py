@@ -16,19 +16,12 @@ def main_loop() -> None:
         if choice == "delete":
             cmd_delete_by_student_id()
             continue
-        if choice == "searchl":
-            cmd_search_by_last_name()
+        if choice == "search":
+            cmd_search()
             continue
-        if choice == "searchp":
-            cmd_search_by_pesel()
+        if choice == "sort":
+            cmd_sort()
             continue
-        if choice == "sbnamel":
-            cmd_sort_by_last_name()
-            continue
-        if choice == "sbpesel":
-            cmd_sort_by_pesel()
-            continue
-
 
 def cmd_start() -> None:
     print(START_TEXT)
@@ -52,11 +45,32 @@ def cmd_list_students() -> None:
 def cmd_delete_by_student_id() -> None:
     ...
 
+def cmd_search() -> None:
+    print("Enter 'pesel' to search by pesel or enter 'last' to search by lst name")
+    while True:
+        choice = input(">>> ").lower()
+        if choice == "pesel":
+            cmd_search_by_pesel()
+            break
+        if choice == "last":
+            cmd_search_by_last_name()
+            break
+
 def cmd_search_by_last_name() -> None:
     ...
 
 def cmd_search_by_pesel() -> None:
     ...
+
+def cmd_sort() -> None:
+    print("Enter 'pesel to sort by pesel")
+    while True:
+        choice = input(">>> ").lower()
+        if choice == "last":
+            cmd_sort_by_last_name()
+            break
+        if choice == "pesel":
+            cmd_sort_by_pesel()
 
 def cmd_sort_by_last_name() -> None:
     ...

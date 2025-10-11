@@ -19,3 +19,19 @@ def get_all_students() -> list[Student]:
             gender=student[5]
         ))
     return students
+
+def add_student(student: Student) -> None:
+    with open('data.json', 'r') as file:
+        data = json.load(file)
+
+    data.append([
+        student.first_name,
+        student.last_name,
+        student.address,
+        student.student_id,
+        student.pesel,
+        student.gender
+    ])
+
+    with open('data.json', 'w') as file:
+        json.dump(data, file)

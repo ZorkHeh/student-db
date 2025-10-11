@@ -55,3 +55,19 @@ def search_student_by_last(last_name: str) -> list[Student] | list[None]:
 
     return matches
 
+def search_student_by_pesel(pesel: str) -> Student | None:
+    with open(JSON_PATH, 'r') as file:
+        data = json.load(file)
+
+    for student in data:
+        if student[4] == pesel:
+            return Student(
+                first_name=student[0],
+                last_name=student[1],
+                address=student[2],
+                student_id=student[3],
+                pesel=student[4],
+                gender=student[5]
+            )
+
+    return None

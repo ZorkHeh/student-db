@@ -1,12 +1,13 @@
 import json
 
 from domain.models import Student
+from core.config import JSON_PATH
 
 
 
 def get_all_students() -> list[Student]:
     students: list[Student] = []
-    with open('data.json', 'r') as file:
+    with open(JSON_PATH, 'r') as file:
         data = json.load(file)
 
     for student in data:
@@ -21,7 +22,7 @@ def get_all_students() -> list[Student]:
     return students
 
 def add_student(student: Student) -> None:
-    with open('data.json', 'r') as file:
+    with open(JSON_PATH, 'r') as file:
         data = json.load(file)
 
     data.append([
@@ -33,5 +34,24 @@ def add_student(student: Student) -> None:
         student.gender
     ])
 
-    with open('data.json', 'w') as file:
+    with open(JSON_PATH, 'w') as file:
         json.dump(data, file)
+
+def search_student_by_last(last_name: str) -> list[Student] | list[None]:
+    with open(JSON_PATH, 'r') as file:
+        data = json.load(file)
+
+    matches: list[Student] = []
+    for student in data:
+        if last_name.lower() in student[1].lower():
+            matches.append(Student(
+                first_name=student[0],
+                last_name=student[1],
+                address=student[2],
+                student_id=student[3],
+                pesel=student[4],
+                gender=student[5]
+            ))
+
+    return matches
+

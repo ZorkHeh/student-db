@@ -6,3 +6,6 @@ class Student:
         self.student_id = student_id
         self.pesel = pesel
         self.gender = gender
+
+    def __repr__(self):
+        return f'<{self.first_name} {self.last_name} {self.address} {self.student_id} {self.pesel} {self.gender}>'

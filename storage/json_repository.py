@@ -20,7 +20,7 @@ def get_all_students() -> list[Student]:
         ))
     return students
 
-def add_student(student: Student) -> None:
+def add_student(student: Student) -> bool:
     with open(JSON_PATH, 'r') as file:
         data = json.load(file)
 
@@ -35,6 +35,8 @@ def add_student(student: Student) -> None:
 
     with open(JSON_PATH, 'w') as file:
         json.dump(data, file)
+
+        return True
 
 def search_student_by_last(last_name: str) -> list[Student] | list[None]:
     with open(JSON_PATH, 'r') as file:

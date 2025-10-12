@@ -16,18 +16,10 @@ def get_all_students() -> list[Student]:
         raise Exception(f"Database {DATABASE} is not supported.")
 
 
-def add_student(first_name: str, last_name: str, address: str, student_id: str, pesel: str, gender: str) -> None:
-    student = Student(
-        first_name=first_name,
-        last_name=last_name,
-        address=address,
-        student_id=student_id,
-        pesel=pesel,
-        gender=gender
-    )
+def add_student(student: Student) -> bool:
 
     if DATABASE == "json":
-        js_add_student(student)
+        return js_add_student(student)
     else:
         raise Exception(f"Database {DATABASE} is not supported.")
 

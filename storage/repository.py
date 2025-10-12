@@ -1,0 +1,50 @@
+from core.config import DATABASE
+
+from domain.models import Student
+
+from storage.json_repository import get_all_students as js_get_all_students
+from storage.json_repository import add_student as js_add_student
+from storage.json_repository import search_student_by_last as js_search_student_by_last
+from storage.json_repository import search_student_by_pesel as js_search_student_by_pesel
+from storage.json_repository import delete_user_by_student_id as js_delete_user_by_student_id
+
+
+def get_all_students() -> list[Student]:
+    if DATABASE == "json":
+        return js_get_all_students()
+    else:
+        raise Exception(f"Database {DATABASE} is not supported.")
+
+
+def add_student(first_name: str, last_name: str, address: str, student_id: str, pesel: str, gender: str) -> None:
+    student = Student(
+        first_name=first_name,
+        last_name=last_name,
+        address=address,
+        student_id=student_id,
+        pesel=pesel,
+        gender=gender
+    )
+
+    if DATABASE == "json":
+        js_add_student(student)
+    else:
+        raise Exception(f"Database {DATABASE} is not supported.")
+
+def search_student_by_last(last_name: str) -> list[Student] | list[None]:
+    if DATABASE == "json":
+        return js_search_student_by_last(last_name)
+    else:
+        raise Exception(f"Database {DATABASE} is not supported.")
+
+def search_student_by_pesel(pesel: str) -> Student | None:
+    if DATABASE == "json":
+        return js_search_student_by_pesel(pesel)
+    else:
+        raise Exception(f"Database {DATABASE} is not supported.")
+
+def delete_user_by_student_id(student_id: str) -> bool:
+    if DATABASE == "json":
+        return js_delete_user_by_student_id(student_id)
+    else:
+        raise Exception(f"Database {DATABASE} is not supported.")

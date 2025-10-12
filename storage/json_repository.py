@@ -4,7 +4,6 @@ from domain.models import Student
 from core.config import JSON_PATH
 
 
-
 def get_all_students() -> list[Student]:
     students: list[Student] = []
     with open(JSON_PATH, 'r') as file:
@@ -71,3 +70,21 @@ def search_student_by_pesel(pesel: str) -> Student | None:
             )
 
     return None
+
+def delete_user_by_student_id(student_id: str) -> None:
+    with open(JSON_PATH, 'r') as file:
+        data = json.load(file)
+
+    is_student_exists: bool = False
+    for student in data:
+        if student[3] == student_id:
+            is_student_exists = True
+            data.remove(student)
+            break
+
+    if not is_student_exists:
+        raise ValueError(f'Student {student_id} does not exist')
+
+    with open(JSON_PATH, 'w') as file:
+        json.dump(data, file)
+

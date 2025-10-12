@@ -71,20 +71,20 @@ def search_student_by_pesel(pesel: str) -> Student | None:
 
     return None
 
-def delete_user_by_student_id(student_id: str) -> None:
+def delete_user_by_student_id(student_id: str) -> bool:
+    flag: bool = False
     with open(JSON_PATH, 'r') as file:
         data = json.load(file)
 
-    is_student_exists: bool = False
     for student in data:
         if student[3] == student_id:
-            is_student_exists = True
+            flag = True
             data.remove(student)
+
+            with open(JSON_PATH, 'w') as file:
+                json.dump(data, file)
             break
 
-    if not is_student_exists:
-        raise ValueError(f'Student {student_id} does not exist')
+    return flag
 
-    with open(JSON_PATH, 'w') as file:
-        json.dump(data, file)
 

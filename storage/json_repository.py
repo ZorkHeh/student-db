@@ -1,7 +1,7 @@
 import json
 
 from domain.models import Student
-from core.config import JSON_PATH
+from core.config import JSON_PATH, INDENTATION
 
 
 def get_all_students() -> list[Student]:
@@ -34,7 +34,7 @@ def add_student(student: Student) -> bool:
     ])
 
     with open(JSON_PATH, 'w') as file:
-        json.dump(data, file)
+        json.dump(data, file, indent=INDENTATION)
 
         return True
 
@@ -84,7 +84,7 @@ def delete_user_by_student_id(student_id: str) -> bool:
             data.remove(student)
 
             with open(JSON_PATH, 'w') as file:
-                json.dump(data, file)
+                json.dump(data, file, indent=INDENTATION)
             break
 
     return flag

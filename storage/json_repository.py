@@ -38,7 +38,7 @@ def add_student(student: Student) -> bool:
 
         return True
 
-def search_student_by_last(last_name: str) -> list[Student] | list[None]:
+def search_student_by_last(last_name: str) -> list[Student] | None:
     with open(JSON_PATH, 'r') as file:
         data = json.load(file)
 
@@ -54,7 +54,10 @@ def search_student_by_last(last_name: str) -> list[Student] | list[None]:
                 gender=student[5]
             ))
 
-    return matches
+    if matches:
+        return matches
+    else:
+        return None
 
 def search_student_by_pesel(pesel: str) -> Student | None:
     with open(JSON_PATH, 'r') as file:

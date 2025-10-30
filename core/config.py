@@ -1,5 +1,5 @@
 JSON_PATH = 'data/data.json'
 
-DATABASE = "json"
+DATABASE = "sqlite"
 
 INDENTATION = 4

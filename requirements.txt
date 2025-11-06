@@ -1,7 +1,6 @@
 greenlet==3.2.4
 markdown-it-py==4.0.0
 mdurl==0.1.2
-mypy_extensions==1.1.0
 pathspec==0.12.1
 peewee==3.18.2
 Pygments==2.19.2

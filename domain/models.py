@@ -13,23 +13,24 @@ class Student:
     def __repr__(self):
         return f'<{self.first_name} {self.last_name} {self.address} {self.student_id} {self.pesel} {self.gender}>'
 
-
 db = SqliteDatabase('data/students.db')
-db.connect()
 
+def initialize_db(database):
+
+    database.connect()
+    database.create_tables([DbStudent])
 
 class DbStudent(Model):
     first_name = CharField()
     last_name = CharField()
     address = CharField()
-    album_number = IntegerField()
-    pesel = CharField()
+    student_id = CharField(unique=True)
+    pesel = CharField(unique=True)
     gender = CharField()
-
-    def __repr__(self):
-        return f'<{self.first_name}, {self.last_name}, {self.address}, {self.pesel}, {self.gender}>'
 
     class Meta:
         database = db
 
-db.create_tables([DbStudent])
+
+
+

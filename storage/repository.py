@@ -1,3 +1,5 @@
+from peewee import IntegrityError
+
 from core.config import DATABASE
 
 from domain.models import Student
@@ -29,7 +31,7 @@ def get_all_students() -> list[Student]:
                 last_name=row.last_name,
                 first_name=row.first_name,
                 address=row.address,
-                student_id=str(row.album_number),
+                student_id=row.student_id,
                 pesel=row.pesel,
                 gender=row.gender,
             ))
@@ -43,14 +45,18 @@ def add_student(student: Student) -> bool:
     if DATABASE == "json":
         return js_add_student(student)
     elif DATABASE == "sqlite":
-        return db_add_student(
-            first=student.first_name,
-            last=student.last_name,
-            address=student.address,
-            album_number=int(student.student_id),
-            pesel=student.pesel,
-            gender=student.gender,
-        )
+        try:
+            return db_add_student(
+                first=student.first_name,
+                last=student.last_name,
+                address=student.address,
+                student_id=student.student_id,
+                pesel=student.pesel,
+                gender=student.gender,
+            )
+
+        except IntegrityError:
+            return False
     else:
         raise DataBaseError()
 
@@ -65,7 +71,7 @@ def search_student_by_last(last_name: str) -> list[Student] | None:
                 first_name=student.first_name,
                 last_name=student.last_name,
                 address=student.address,
-                student_id=str(student.album_number),
+                student_id=student.student_id,
                 pesel=student.pesel,
                 gender=student.gender,
             ))
@@ -86,7 +92,7 @@ def search_student_by_pesel(pesel: str) -> Student | None:
                 first_name=query.first_name,
                 last_name=query.last_name,
                 address=query.address,
-                student_id=str(query.album_number),
+                student_id=query.student_id,
                 pesel=query.pesel,
                 gender=query.gender,
             )
@@ -99,6 +105,6 @@ def delete_user_by_student_id(student_id: str) -> bool:
     if DATABASE == "json":
         return js_delete_user_by_student_id(student_id)
     elif DATABASE == "sqlite":
-        return db_delete_student_by_id(int(student_id))
+        return db_delete_student_by_id(student_id)
     else:
         raise DataBaseError()
